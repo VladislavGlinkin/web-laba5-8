@@ -1,0 +1,359 @@
+/* Общие стили для body и html */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Стили для заголовка */
+header {
+    background-color: #343a40;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+}
+
+/* Стили для навигационного меню */
+nav {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 0;
+    display: flex;
+    justify-content: center; /* Выравнивание по центру */
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Стили для основного содержимого */
+main {
+    padding: 20px;
+}
+
+/* Стили для разделов основного содержимого */
+.features,
+.about {
+    margin-bottom: 40px;
+}
+
+.features h2,
+.about h2 {
+    color: #007bff;
+}
+
+.feature {
+    margin-bottom: 20px;
+}
+
+.feature h3 {
+    color: #343a40;
+}
+
+/* Стили для подвала */
+footer {
+    background-color: #343a40;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+}
+
+/* Стили для форм входа и регистрации */
+.forms {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.forms form {
+    width: 45%;
+}
+
+.forms form input[type="text"],
+.forms form input[type="password"],
+.forms form input[type="email"],
+.forms form select {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.forms form button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.forms form button:hover {
+    background-color: #0056b3;
+}
+
+.forms form label {
+    margin-bottom: 5px;
+    display: block;
+}
+
+.forms form hr {
+    margin: 20px 0;
+}
+
+/* Стили для уведомлений */
+.notification {
+    background-color: #28a745;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 20px;
+    display: none; /* Изначально скрыто */
+}
+
+/* Стили для контейнера поиска */
+.search-container {
+    margin-bottom: 20px;
+}
+
+.search-container form {
+    display: flex;
+    align-items: center;
+}
+
+.search-container input[type="text"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    flex: 1;
+}
+
+.search-container button {
+    padding: 8px 15px;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-container button:hover {
+    background-color: #0056b3;
+}
+
+/* Стили для контейнера вакансий */
+.vacancies-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 20px;
+}
+
+.vacancy {
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.vacancy h2 {
+    color: #007bff;
+    margin-bottom: 10px;
+}
+
+.vacancy p {
+    margin: 5px 0;
+}
+
+.vacancy button {
+    padding: 5px 10px;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+.vacancy button:hover {
+    background-color: #0056b3;
+}
+
+.vacancy .description {
+    display: none;
+    margin-top: 10px;
+}
+
+/* Стили для контейнера создания вакансии */
+.create-vacancy {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.create-vacancy h2 {
+    color: #007bff;
+    margin-bottom: 10px;
+}
+
+.create-vacancy form {
+    display: flex;
+    flex-direction: column;
+}
+
+.create-vacancy label {
+    margin-bottom: 5px;
+}
+
+.create-vacancy input[type="text"],
+.create-vacancy textarea {
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.create-vacancy button {
+    padding: 8px 15px;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.create-vacancy button:hover {
+    background-color: #0056b3;
+}
+
+/* Стили для кнопки "Удалить вакансию" */
+.delete-button {
+    padding: 8px 15px;
+    border: none;
+    background-color: #dc3545; /* Цвет кнопки */
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-right: 10px; /* Отступ справа */
+}
+
+.delete-button:hover {
+    background-color: #c82333; /* Цвет кнопки при наведении */
+}
+
+/* Отступ между кнопкой и ссылкой "Просмотреть отклики" */
+.delete-form a {
+    margin-right: 10px; /* Отступ справа */
+}
+
+/* Стили для блока секции */
+section {
+    margin-bottom: 20px;
+}
+
+/* Стили для заголовка */
+section h2 {
+    color: #007bff; /* Цвет текста */
+}
+
+/* Стили для сообщений об успехе и ошибке */
+.success-message {
+    color: #28a745; /* Цвет успешного сообщения */
+    margin-bottom: 10px; /* Отступ снизу */
+}
+
+.error-message {
+    color: #dc3545; /* Цвет сообщения об ошибке */
+    margin-bottom: 10px; /* Отступ снизу */
+}
+
+/* Стили для формы */
+section form {
+    margin-top: 20px; /* Отступ сверху */
+}
+
+/* Стили для полей ввода и меток */
+section form div {
+    margin-bottom: 10px; /* Отступ снизу */
+}
+
+section form label {
+    display: block; /* Сделать метки блочными элементами */
+    margin-bottom: 5px; /* Отступ снизу */
+}
+
+section form input[type="text"],
+section form textarea {
+    width: 100%; /* Ширина полей ввода */
+    padding: 8px; /* Поля ввода */
+    border: 1px solid #ced4da; /* Граница поля ввода */
+    border-radius: 5px; /* Скругление углов */
+    box-sizing: border-box; /* Размеры, включая границу и отступы, не увеличиваются */
+}
+
+section form textarea {
+    height: 150px; /* Высота текстового поля */
+}
+
+/* Стили для кнопки */
+section form button {
+    padding: 10px 20px; /* Поля кнопки */
+    background-color: #007bff; /* Цвет фона кнопки */
+    color: #fff; /* Цвет текста кнопки */
+    border: none; /* Убрать границу кнопки */
+    border-radius: 5px; /* Скругление углов кнопки */
+    cursor: pointer; /* Изменение курсора при наведении */
+    transition: background-color 0.3s ease; /* Плавное изменение цвета фона при наведении */
+}
+
+section form button:hover {
+    background-color: #0056b3; /* Цвет фона кнопки при наведении */
+}
+
+/* Стили для блока откликов */
+.response {
+    border: 1px solid #ced4da; /* Граница блока отклика */
+    border-radius: 5px; /* Скругление углов блока */
+    padding: 10px; /* Внутренние отступы блока */
+    margin-bottom: 20px; /* Отступ снизу между откликами */
+}
+
+/* Стили для отдельных элементов отклика */
+.response p {
+    margin: 5px 0; /* Отступы для параграфов внутри блока отклика */
+}
+
+.response a {
+    color: #007bff; /* Цвет ссылок внутри блока отклика */
+    text-decoration: none; /* Убираем подчеркивание у ссылок */
+}
+
+.response a:hover {
+    text-decoration: underline; /* Подчеркивание у ссылок при наведении */
+}
