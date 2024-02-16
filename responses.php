@@ -22,15 +22,36 @@ $vacancy_id = $_GET['vacancy_id'];
 include 'db_connect.php';
 
 // Запрос к базе данных для получения откликов для выбранной вакансии, информации из таблиц Resume и User
-$query = "SELECT Responses.response_id, Responses.response_date, Resume.full_name, Resume.skills, Resume.experience, User.email
+$query = "SELECT Responses.response_date
           FROM Responses 
-          JOIN Resume ON Responses.user_id = Resume.user_id
-          JOIN User ON Responses.user_id = User.id
           WHERE Responses.vacancy_id = ?";
 $stmt = mysqli_prepare($connection, $query);
 mysqli_stmt_bind_param($stmt, "i", $vacancy_id);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
+
+// Создаем ассоциативный массив для подсчета откликов по датам
+$responseCountsByDate = [];
+
+while ($row = mysqli_fetch_assoc($result)) {
+    // Получаем дату отклика
+    $responseDate = date('Y-m-d', strtotime($row['response_date']));
+    
+    // Увеличиваем счетчик откликов для данной даты
+    if (isset($responseCountsByDate[$responseDate])) {
+        $responseCountsByDate[$responseDate]++;
+    } else {
+        $responseCountsByDate[$responseDate] = 1;
+    }
+}
+
+// Преобразуем данные в формат, подходящий для построения графика
+$responseDates = array_keys($responseCountsByDate);
+$responseCounts = array_values($responseCountsByDate);
+
+// Закрываем соединение с базой данных
+mysqli_stmt_close($stmt);
+mysqli_close($connection);
 ?>
 
 <!DOCTYPE html>
@@ -56,28 +77,63 @@ $result = mysqli_stmt_get_result($stmt);
     </nav>
     <main>
         <?php
-        // Выводим отклики для выбранной вакансии
-        if (mysqli_num_rows($result) > 0) {
-            while ($row = mysqli_fetch_assoc($result)) {
-                echo '<div class="response">';
-                echo '<p>Имя: ' . $row['full_name'] . '</p>';
-                echo '<p>Электронная почта: <a href="mailto:' . $row['email'] . '">' . $row['email'] . '</a></p>';
-                echo '<p>Навыки: ' . $row['skills'] . '</p>';
-                echo '<p>Опыт: ' . $row['experience'] . '</p>';
-                echo '<p>Дата отклика: ' . $row['response_date'] . '</p>';
-                // и т.д.
-                echo '</div>';
-            }
-        } else {
-            echo '<p>На эту вакансию пока нет откликов.</p>';
+        // Подключаемся к базе данных
+        include 'db_connect.php';
+
+        // Запрос к базе данных для получения информации о резюме
+        $resumeQuery = "SELECT Resume.full_name, Resume.skills, Resume.experience, User.email
+                        FROM Responses 
+                        JOIN Resume ON Responses.user_id = Resume.user_id
+                        JOIN User ON Responses.user_id = User.id
+                        WHERE Responses.vacancy_id = ?";
+        $stmt = mysqli_prepare($connection, $resumeQuery);
+        mysqli_stmt_bind_param($stmt, "i", $vacancy_id);
+        mysqli_stmt_execute($stmt);
+        $resumeResult = mysqli_stmt_get_result($stmt);
+
+        // Выводим информацию о резюме
+        while ($row = mysqli_fetch_assoc($resumeResult)) {
+            echo '<div class="response">';
+            echo '<p>Имя: ' . $row['full_name'] . '</p>';
+            echo '<p>Электронная почта: <a href="mailto:' . $row['email'] . '">' . $row['email'] . '</a></p>';
+            echo '<p>Навыки: ' . $row['skills'] . '</p>';
+            echo '<p>Опыт: ' . $row['experience'] . '</p>';
+            echo '</div>';
         }
+
+        // Закрываем соединение с базой данных
+        mysqli_stmt_close($stmt);
+        mysqli_close($connection);
         ?>
     </main>
+    <canvas id="responseChart" width="800" height="400"></canvas>
 </body>
-</html>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var ctx = document.getElementById('responseChart').getContext('2d');
 
-<?php
-// Закрываем соединение с базой данных
-mysqli_stmt_close($stmt);
-mysqli_close($connection);
-?>
+        var responseChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: <?php echo json_encode($responseDates); ?>,
+                datasets: [{
+                    label: 'Отклики на вакансию',
+                    data: <?php echo json_encode($responseCounts); ?>,
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        precision: 0
+                    }
+                }
+            }
+        });
+    });
+</script>
+</html>
